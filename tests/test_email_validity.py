@@ -20,7 +20,6 @@ class TestNewsGroupAnalysis(unittest.TestCase):
         with self.assertRaises(EmailFormatError):
             if not nga.process_newsgroup_file("Homework/uw515/tests/not_email.txt", {}):
                 raise EmailFormatError("Wrong file format sent! File must be in Email format.")
-        # self.assertRaises(nga.EmailFormatError, nga.process_newsgroup_file, "Homework/uw515/tests/not_email.txt", {})        
 
 suite = unittest.TestLoader().loadTestsFromTestCase(TestNewsGroupAnalysis)
 _ = unittest.TextTestRunner().run(suite)

@@ -38,12 +38,6 @@ def process_newsgroup_file(path, word_counts):
         data = f.readlines()
         if not check_file_format(data):
             return False
-        # except EmailFormatError as e:
-        #     print(e)
-        #     return (valid_emails, None)
-        # except:
-        #     print("Another Issue Raised!")
-        #     return (valid_emails, None)
         for line in data:
             words = line.split()
             for word in words:
@@ -76,7 +70,7 @@ def process_newsgroup_topic(dpath):
     with open("sci.crypt.wordcounts.pkl",'wb') as f1:
         pickle.dump(word_counts, f1)
 
-process_newsgroup_file("E:/UW/UW_WINTER_Materials_2020/Data 557/Week 2/Homework/uw515/tests/not_email.txt", {})
+# process_newsgroup_file("E:/UW/UW_WINTER_Materials_2020/Data 557/Week 2/Homework/uw515/tests/not_email.txt", {})
 # process_newsgroup_file("E:/UW/UW_WINTER_Materials_2020/Data 557/Week 2/Homework/uw515/tests/for_tests/emails/16351", {})
 
 # process_newsgroup_topic("E:/UW/UW_WINTER_Materials_2020/Data 557/Week 2/Homework/uw515/tests/for_tests/emails")
