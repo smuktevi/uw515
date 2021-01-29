@@ -3,6 +3,11 @@ import sys
 # sys.path.insert(1, 'E:/UW/UW_WINTER_Materials_2020/Data 557/Week 2/')
 import newsgroup_analysis as nga
 
+class EmailFormatError(Exception):
+    """Raised when a file passed to the function is not in an Email format"""
+    def __init__(self, message):
+        self.message = message
+
 class TestNewsGroupAnalysis(unittest.TestCase):
 
     def test_checkemail_at(self):
@@ -12,8 +17,9 @@ class TestNewsGroupAnalysis(unittest.TestCase):
     
     def test_emailformaterror(self):
         """confirm that a non-email format raises EmailFormatError"""
-        with self.assertRaises(nga.EmailFormatError):
-            nga.process_newsgroup_file("Homework/uw515/tests/not_email.txt", {})
+        with self.assertRaises(EmailFormatError):
+            if not nga.process_newsgroup_file("Homework/uw515/tests/not_email.txt", {}):
+                raise EmailFormatError("Wrong file format sent! File must be in Email format.")
         # self.assertRaises(nga.EmailFormatError, nga.process_newsgroup_file, "Homework/uw515/tests/not_email.txt", {})        
 
 suite = unittest.TestLoader().loadTestsFromTestCase(TestNewsGroupAnalysis)
