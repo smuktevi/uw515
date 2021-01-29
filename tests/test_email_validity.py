@@ -1,6 +1,6 @@
 import unittest
 import sys
-sys.path.insert(1, 'E:/UW/UW_WINTER_Materials_2020/Data 557/Week 2/')
+# sys.path.insert(1, 'E:/UW/UW_WINTER_Materials_2020/Data 557/Week 2/')
 import newsgroup_analysis as nga
 
 class TestEmailValidity(unittest.TestCase):
@@ -37,8 +37,24 @@ class TestEmailValidity(unittest.TestCase):
         edge_test("kfsjn12408172u98-29524-5u82039u09023509")
         print("Email Address Validity Test: PASSED")
     
-    def test_email_at(self):
-        
+    def test_emailformaterror(self):
+        #valid case
+        with open("Homework/uw515/tests/for_tests/email.txt", encoding="windows-1252") as f:
+            try:
+                data = f.readlines()
+                self.assertTrue(nga.check_file_format(data))
+            except:
+                raise nga.EmailFormatError("Wrong file format sent! File must be in Email format.")
+
+        #invalid case
+        with open("Homework/uw515/tests/for_tests/not_email.txt", encoding="windows-1252") as f:
+            try:
+                data = f.readlines()
+                self.assertFalse(nga.check_file_format(data))
+            except:
+                raise nga.EmailFormatError("Wrong file format sent! File must be in Email format.")
+
+
         
 suite = unittest.TestLoader().loadTestsFromTestCase(TestEmailValidity)
 _ = unittest.TextTestRunner().run(suite)
