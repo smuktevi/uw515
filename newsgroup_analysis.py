@@ -77,5 +77,5 @@ def process_newsgroup_topic(dpath):
 
 # process_newsgroup_file("E:/UW/UW_WINTER_Materials_2020/Data 557/Week 2/Homework/uw515/tests/not_email.txt", {})
 # process_newsgroup_file("E:/UW/UW_WINTER_Materials_2020/Data 557/Week 2/Homework/uw515/tests/for_tests/emails/16351", {})
-
+print(check_email_validity("emailnoat.com"))
 # process_newsgroup_topic("E:/UW/UW_WINTER_Materials_2020/Data 557/Week 2/Homework/uw515/tests/for_tests/emails")
