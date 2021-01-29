@@ -24,6 +24,19 @@ def check_email_validity(email_id):
             return False 
     return True
 
+def check_file_format(file_data):
+        valid_email_format = {"From:":0, "Date:":0, "Subject:":0}
+        for line in file_data:
+            words = line.split()
+            if len(words)>0:
+                if words[0] in valid_email_format:
+                    valid_email_format[words[0]] = 1
+                if len(words) == 1 and words[0] == '\n':
+                    break
+            if sum(valid_email_format.values())==3:
+                return True
+        return False
+
 def process_newsgroup_file(path, word_counts):
     valid_emails=[]
     with open(path, encoding="windows-1252") as f:
@@ -32,11 +45,11 @@ def process_newsgroup_file(path, word_counts):
             if not check_file_format(data):
                 raise EmailFormatError("Wrong file format sent! File must be in Email format.")
         except EmailFormatError as e:
-            print(e.message)
+            print("RAISED EXCEPTION!")
             return (valid_emails, None)
-        except:
-            print("Another Issue Raised!")
-            return (valid_emails, None)
+        # except:
+        #     print("Another Issue Raised!")
+        #     return (valid_emails, None)
         for line in data:
             words = line.split()
             for word in words:
@@ -69,7 +82,7 @@ def process_newsgroup_topic(dpath):
     with open("sci.crypt.wordcounts.pkl",'wb') as f1:
         pickle.dump(word_counts, f1)
 
-# process_newsgroup_file("E:/UW/UW_WINTER_Materials_2020/Data 557/Week 2/Homework/uw515/tests/for_tests/not_email.txt", {})
+process_newsgroup_file("E:/UW/UW_WINTER_Materials_2020/Data 557/Week 2/Homework/uw515/tests/not_email.txt", {})
 # process_newsgroup_file("E:/UW/UW_WINTER_Materials_2020/Data 557/Week 2/Homework/uw515/tests/for_tests/emails/16351", {})
 
 # process_newsgroup_topic("E:/UW/UW_WINTER_Materials_2020/Data 557/Week 2/Homework/uw515/tests/for_tests/emails")
