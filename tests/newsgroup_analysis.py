@@ -3,7 +3,7 @@ class EmailFormatError(Exception):
     """Raised when a file passed to the function is not in an Email format"""
     def __init__(self, message):
         self.message = message
-        
+
 def check_email_validity(email_id):
     if '@' not in  email_id or ".." in email_id or len(email_id)<=2:
         return False
@@ -42,7 +42,7 @@ def process_newsgroup_file(path, word_counts):
     with open(path, encoding="windows-1252") as f:
         data = f.readlines()
         if not check_file_format(data):
-            return False
+            raise EmailFormatError("Wrong format, not email format!")
         for line in data:
             words = line.split()
             for word in words:
