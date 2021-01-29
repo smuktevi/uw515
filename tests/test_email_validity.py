@@ -12,10 +12,10 @@ class TestNewsGroupAnalysis(unittest.TestCase):
         self.assertFalse(nga.check_email_validity("emailnoat.com"),"missing the @ symbol")
         self.assertFalse(nga.check_email_validity("email@noat.c@om"), "2 @ symbols")
     
-    def test_emailformaterror(self):
-        """confirm that a non-email format raises EmailFormatError"""
-        with self.assertRaises(nga.EmailFormatError):
-            nga.process_newsgroup_file("not_email.txt", {})
+    # def test_emailformaterror(self):
+    #     """confirm that a non-email format raises EmailFormatError"""
+    #     with self.assertRaises(nga.EmailFormatError):
+    #         nga.process_newsgroup_file("uw515/tests/not_email.txt", {})
 
 
 suite = unittest.TestLoader().loadTestsFromTestCase(TestNewsGroupAnalysis)
