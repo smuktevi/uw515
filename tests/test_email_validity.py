@@ -14,8 +14,9 @@ class TestNewsGroupAnalysis(unittest.TestCase):
     
     def test_emailformaterror(self):
         """confirm that a non-email format raises EmailFormatError"""
+        __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
         with self.assertRaises(nga.EmailFormatError):
-            nga.process_newsgroup_file("uw515/tests/not_email.txt", {})
+            nga.process_newsgroup_file(os.path.join(__location__, 'not_email.txt'), {})
 
 
 suite = unittest.TestLoader().loadTestsFromTestCase(TestNewsGroupAnalysis)
