@@ -41,12 +41,11 @@ def process_newsgroup_file(path, word_counts):
     valid_emails=[]
     with open(path, encoding="windows-1252") as f:
         data = f.readlines()
-        try:
-            if not check_file_format(data):
-                raise EmailFormatError("Wrong file format sent! File must be in Email format.")
-        except EmailFormatError as e:
-            print("RAISED EXCEPTION!")
-            return (valid_emails, None)
+        if not check_file_format(data):
+            raise EmailFormatError("Wrong file format sent! File must be in Email format.")
+        # except EmailFormatError as e:
+        #     print(e)
+        #     return (valid_emails, None)
         # except:
         #     print("Another Issue Raised!")
         #     return (valid_emails, None)
