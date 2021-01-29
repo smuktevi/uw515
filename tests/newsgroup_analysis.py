@@ -1,7 +1,6 @@
 
 class EmailFormatError(Exception):
     """Raised when a file passed to the function is not in an Email format"""
-
     def __init__(self, message):
         self.message = message
 
@@ -24,19 +23,6 @@ def check_email_validity(email_id):
         if not ch.isalnum() and ch not in "-.":
             return False 
     return True
-
-def check_file_format(file_data):
-    valid_email_format = {"From:":0, "Date:":0, "Subject:":0}
-    for line in file_data:
-        words = line.split()
-        if len(words)>0:
-            if words[0] in valid_email_format:
-                valid_email_format[words[0]] = 1
-            if len(words) == 1 and words[0] == '\n':
-                break
-        if sum(valid_email_format.values())==3:
-            return True
-    return False
 
 def process_newsgroup_file(path, word_counts):
     valid_emails=[]
