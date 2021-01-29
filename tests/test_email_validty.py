@@ -36,6 +36,8 @@ class TestEmailValidity(unittest.TestCase):
         edge_test("abcdef", "Does not check for @ sign")
         edge_test("kfsjn12408172u98-29524-5u82039u09023509")
         print("Email Address Validity Test: PASSED")
+    
+    def test_email_at(self):
         
         
 suite = unittest.TestLoader().loadTestsFromTestCase(TestEmailValidity)
