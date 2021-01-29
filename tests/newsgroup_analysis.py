@@ -1,4 +1,9 @@
 
+class EmailFormatError(Exception):
+    """Raised when a file passed to the function is not in an Email format"""
+    def __init__(self, message):
+        self.message = message
+        
 def check_email_validity(email_id):
     if '@' not in  email_id or ".." in email_id or len(email_id)<=2:
         return False

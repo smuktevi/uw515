@@ -1,3 +1,9 @@
+
+class EmailFormatError(Exception):
+    """Raised when a file passed to the function is not in an Email format"""
+    def __init__(self, message):
+        self.message = message
+        
 def check_email_validity(email_id):
     if '@' not in  email_id or ".." in email_id or len(email_id)<=2:
         return False
@@ -18,10 +24,25 @@ def check_email_validity(email_id):
             return False 
     return True
 
+def check_file_format(file_data):
+        valid_email_format = {"From:":0, "Date:":0, "Subject:":0}
+        for line in file_data:
+            words = line.split()
+            if len(words)>0:
+                if words[0] in valid_email_format:
+                    valid_email_format[words[0]] = 1
+                if len(words) == 1 and words[0] == '\n':
+                    break
+            if sum(valid_email_format.values())==3:
+                return True
+        return False
+
 def process_newsgroup_file(path, word_counts):
     valid_emails=[]
     with open(path, encoding="windows-1252") as f:
         data = f.readlines()
+        if not check_file_format(data):
+            return False
         for line in data:
             words = line.split()
             for word in words:
@@ -54,64 +75,7 @@ def process_newsgroup_topic(dpath):
     with open("sci.crypt.wordcounts.pkl",'wb') as f1:
         pickle.dump(word_counts, f1)
 
-# process_newsgroup_file("E:/UW/UW_WINTER_Materials_2020/Data 557/Week 2/Homework/uw515/tests/for_tests/not_email.txt", {})
+# process_newsgroup_file("E:/UW/UW_WINTER_Materials_2020/Data 557/Week 2/Homework/uw515/tests/not_email.txt", {})
 # process_newsgroup_file("E:/UW/UW_WINTER_Materials_2020/Data 557/Week 2/Homework/uw515/tests/for_tests/emails/16351", {})
 
 # process_newsgroup_topic("E:/UW/UW_WINTER_Materials_2020/Data 557/Week 2/Homework/uw515/tests/for_tests/emails")
- #valid case
-        # with open("Homework/uw515/tests/for_tests/email.txt", encoding="windows-1252") as f:
-        #     try:
-        #         data = f.readlines()
-        #         self.assertTrue(check_file_format(data))
-        #     except:
-        #         raise EmailFormatError("Wrong file format sent! File must be in Email format.")
-
-        # #invalid case
-        # with open("Homework/uw515/tests/for_tests/not_email.txt", encoding="windows-1252") as f:
-        #     try:
-        #         data = f.readlines()
-        #         self.assertFalse(check_file_format(data))
-        #     except:
-        #         raise EmailFormatError("Wrong file format sent! File must be in Email format.")
-
-
-         # try:
-    #     if not check_file_format(data):
-    #         raise EmailFormatError("Wrong file format sent! File must be in Email format.")
-    # except EmailFormatError as e:
-    #     print(e.message)
-    #     return (valid_emails, None)
-    # except:
-    #     print("Another Issue Raised!")
-    #     return (valid_emails, None)
-    # def test_email_validity(self):
-    #     """
-    #     Invokes check_email_validity funciton with different test cases
-    #     """
-    #     def one_shot_test(valid_email, message=""):
-    #         """
-    #         Checks email validity function for valid email test cases.
-    #         """
-    #         try:
-    #             self.assertTrue(nga.check_email_validity(valid_email))
-    #         except:
-    #             raise RuntimeError("The check_email_validity() did not pass for valid test case: ",valid_email, message)
-
-    #     def edge_test(invalid_email, message=""):
-    #         """
-    #         Checks email validity function for invalid email "edge" cases.
-    #         """
-    #         try:
-    #             self.assertFalse(nga.check_email_validity(invalid_email))
-    #         except:
-    #             raise RuntimeError("The check_email_validity() passed for an invalid test case: ", invalid_email, message)
-
-    #     one_shot_test("abc!!!#@aol.com")
-    #     one_shot_test("abc12reg34##!*&@gmail.com")    
-    #     one_shot_test("abcdef12345@gmail.com")    
-    #     one_shot_test("abc-asd.asd@asd.com")
-    #     edge_test("121212121@")
-    #     edge_test("1^%$!@*^$#@^#$@!&^#@*%#!%$#*&^%")
-    #     edge_test("abcdef", "Does not check for @ sign")
-    #     edge_test("kfsjn12408172u98-29524-5u82039u09023509")
-    #     print("Email Address Validity Test: PASSED")
