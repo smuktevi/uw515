@@ -1,8 +1,9 @@
 import unittest
 import sys
 # sys.path.insert(1, 'E:/UW/UW_WINTER_Materials_2020/Data 557/Week 2/')
+import os, sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import newsgroup_analysis as nga
-
 class TestNewsGroupAnalysis(unittest.TestCase):
 
     def test_checkemail_at(self):
@@ -13,7 +14,7 @@ class TestNewsGroupAnalysis(unittest.TestCase):
     def test_emailformaterror(self):
         """confirm that a non-email format raises EmailFormatError"""
         with self.assertRaises(nga.EmailFormatError):
-            nga.process_newsgroup_file("Homework/uw515/tests/not_email.txt", {})
+            nga.process_newsgroup_file("uw515/tests/not_email.txt", {})
 
 
 suite = unittest.TestLoader().loadTestsFromTestCase(TestNewsGroupAnalysis)
