@@ -15,10 +15,27 @@ class TestNewsGroupAnalysis(unittest.TestCase):
     def test_emailformaterror(self):
         """confirm that a non-email format raises EmailFormatError"""
         __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
+        path = os.path.join(__location__, 'not_email.txt')
         with self.assertRaises(nga.EmailFormatError):
-            nga.process_newsgroup_file(os.path.join(__location__, 'not_email.txt'), {})
+            nga.process_newsgroup_file(path, {})
+
+    def test_emailformaterror_not_raised(self):
+        """confirm that another issue raises another RunTimeError but not EmailFormatError"""
+        __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
+        path = os.path.join(__location__, 'bad.txt')
+        with self.assertRaises(FileNotFoundError):
+            nga.process_newsgroup_file(path, {})
+    
+    def test_nonempty_wordcount(self):
+        """confirm that process_newsgroup_file() fails to increment non-zero word count."""
+        __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
+        path = os.path.join(__location__, 'check_wc.txt')
+        old_word_counts = {"three": 1, "one":1}
+        temp = old_word_counts.copy()
+        _, new_word_counts = nga.process_newsgroup_file(path, old_word_counts)
+        self.assertTrue(temp["three"]<new_word_counts["three"])
+
 
 
 suite = unittest.TestLoader().loadTestsFromTestCase(TestNewsGroupAnalysis)
 _ = unittest.TextTestRunner().run(suite)
-
